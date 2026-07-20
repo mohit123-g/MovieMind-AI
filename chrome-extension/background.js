@@ -92,7 +92,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             // 2. If not, send it to the FastAPI backend
             try {
                 console.log(`[MovieMind] Fetching AI analysis for ${imdbId}...`);
-                const apiRes = await fetch("http://127.0.0.1:8000/api/analyze", {
+                const apiRes = await fetch(`${API_BASE}/api/analyze`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data)

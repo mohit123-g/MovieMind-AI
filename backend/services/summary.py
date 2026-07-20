@@ -1,5 +1,5 @@
 import os
-from google import genai
+from groq import Groq
 from google.genai import types # Import types for configuration
 from dotenv import load_dotenv
 
@@ -7,9 +7,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Configure Gemini with the NEW SDK
-api_key = os.getenv("GEMINI_API_KEY")
+api_key = os.getenv("GROQ_API_KEY")
 if api_key:
-    client = genai.Client(api_key=api_key)
+    client = Groq(api_key=api_key) # Initialize Groq client
 else:
     client = None
     print("WARNING: GEMINI_API_KEY not found in .env")
@@ -73,17 +73,25 @@ def generate_audience_summary(movie_title: str, stats_data: dict) -> str:
         return _generate_local_fallback(movie_title, positive_pct, negative_pct, total_reviews, vibe_stats)
 
     try:
-        print(f"DEBUG: Sending prompt to Gemini:\n{prompt}\n")
+        print(f"DEBUG: Sending prompt to Groq:\n{prompt}\n")
         
-        response = client.models.generate_content(
-            model='gemini-3.5-flash',
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                system_instruction="You are an expert movie critic and data analyst. Your job is to translate raw review metrics into highly engaging, readable summaries for a browser extension.",
-                temperature=0.7, 
-            )
+        # Using Llama 3.3 70B for highly capable, fast text generation
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are an expert movie critic and data analyst. Your job is to translate raw review metrics into highly engaging, readable summaries for a browser extension."
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            temperature=0.7,
         )
-        return response.text.strip()
+        # Parse the structured response
+        return response.choices[0].message.content.strip()
         
     except Exception as e:
         print(f"⚠️ Gemini API Exception Intercepted: {e}")
