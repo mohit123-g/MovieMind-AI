@@ -12,7 +12,7 @@ if api_key:
     client = Groq(api_key=api_key) # Initialize Groq client
 else:
     client = None
-    print("WARNING: GEMINI_API_KEY not found in .env")
+    print("WARNING: GRAQ_API_KEY not found in .env")
 
 def _generate_local_fallback(movie_title: str, positive_pct: int, negative_pct: int, total_reviews: int, vibe_stats: dict) -> str:
     """
@@ -69,7 +69,7 @@ def generate_audience_summary(movie_title: str, stats_data: dict) -> str:
         
     # Check for client existence before attempting the remote network call
     if not client:
-        print("⚠️ Gemini Client uninitialized. Diverting immediately to local synthesis engine.")
+        print("⚠️ GRAQ Client uninitialized. Diverting immediately to local synthesis engine.")
         return _generate_local_fallback(movie_title, positive_pct, negative_pct, total_reviews, vibe_stats)
 
     try:
@@ -94,7 +94,7 @@ def generate_audience_summary(movie_title: str, stats_data: dict) -> str:
         return response.choices[0].message.content.strip()
         
     except Exception as e:
-        print(f"⚠️ Gemini API Exception Intercepted: {e}")
+        print(f"⚠️ GRAQ API Exception Intercepted: {e}")
         print("🔄 Gracefully degrading to local aggregation engine to safeguard UI integrity.")
         
         # Engage the dynamic local generation framework instead of returning an error string
