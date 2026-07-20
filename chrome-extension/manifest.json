@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "MovieMind AI",
+  "version": "1.0",
+  "description": "AI-powered IMDb review sentiment and vibe analyzer.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.imdb.com/*",
+    "http://127.0.0.1:8000/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.imdb.com/title/*/reviews*"],
+      "js": ["content.js"]
+    }
+  ]
+}

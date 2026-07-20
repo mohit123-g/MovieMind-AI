@@ -1,0 +1,15 @@
+# Ignore legacy Hugging Face models
+backend/models/
+backend/models/*
+
+# Standard Python ignores (if not already in there)
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# Ignore datasets
+ml/dataset/
+
+# VS Code
+.vscode/

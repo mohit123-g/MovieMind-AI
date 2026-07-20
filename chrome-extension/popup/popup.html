@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieMind AI</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h2><span class="imdb-badge">IMDb</span> MovieMind AI</h2>
+            <h3 id="movie-title">Loading movie...</h3>
+        </header>
+
+        <section class="card" id="sentiment-section">
+            <h4>😊 Overall Sentiment</h4>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="sentiment-bar" style="width: 0%;"></div>
+            </div>
+            <p class="stats-text" id="sentiment-text">Waiting for data...</p>
+        </section>
+
+        <section class="card" id="vibe-section">
+            <h4>🎭 Audience Vibe</h4>
+            <div id="vibe-chart-wrapper" style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 15px;">
+                <!-- HTML5 Canvas for the Donut Chart -->
+                <canvas id="vibe-donut-chart" width="110" height="110" style="display: none;"></canvas>
+                <div id="vibe-legend"><p style="font-size: 13px; color: #aaaaaa;">Waiting for data...</p></div>
+            </div>
+        </section>
+
+        <section class="card" id="summary-section">
+            <h4>📝 AI Summary</h4>
+            <p id="ai-summary-text">Waiting for Gemini...</p>
+        </section>
+
+        <section class="card" id="filter-section" style="display: none;">
+            <h4>🎛 Filters</h4>
+            <div id="filters-container">
+                <!-- Filter Action Toggle -->
+                <div class="filter-row" style="border-bottom: 1px solid #333; padding-bottom: 8px;">
+                    <strong>Mode:</strong>
+                    <label><input type="radio" name="filter-mode" value="hide" checked> Hide</label>
+                    <label><input type="radio" name="filter-mode" value="blur"> Blur</label>
+                </div>
+                
+                <!-- Sentiment Filters -->
+                <div class="filter-row">
+                    <strong>Sentiment:</strong>
+                    <label><input type="radio" name="movie-filter" value="all" data-category="sentiment" checked> All</label>
+                    <label><input type="radio" name="movie-filter" value="Positive" data-category="sentiment"> Positive</label>
+                    <label><input type="radio" name="movie-filter" value="Negative" data-category="sentiment"> Negative</label>
+                </div>
+
+                <!-- Vibe Filters -->
+                <div class="filter-row" id="vibe-filters-container">
+                    <strong>Vibes:</strong>
+                    <span id="vibe-radios" style="color: #aaaaaa;">Waiting for analysis...</span>
+                </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div id="nav-action-container" style="margin-top: 15px; display: flex; gap: 10px;">
+                <button id="btn-reanalyze" class="btn btn-secondary" style="display: none;">🔄 Re-Analyze</button>
+                <button id="btn-clear-cache" class="btn btn-danger">🗑 Clear Cache</button>
+            </div>
+        </section>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>
