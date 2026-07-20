@@ -137,6 +137,8 @@
 //     }
 // });
 
+
+
 document.addEventListener('DOMContentLoaded', async () => {
     const titleEl = document.getElementById('movie-title');
     const sentimentText = document.getElementById('sentiment-text');

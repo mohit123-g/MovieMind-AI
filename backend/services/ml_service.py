@@ -3,11 +3,22 @@ import os
 import re
 import joblib
 import numpy as np
+import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
 class MovieMindMLService:
     def __init__(self):
+        # NEW CRITICAL FIX FOR DEPLOYMENT:
+        # Automatically download required NLTK assets if they are missing on Render
+        print("📥 Verifying local NLTK assets...")
+        try:
+            nltk.download('stopwords', quiet=True)
+            nltk.download('wordnet', quiet=True)
+            nltk.download('omw-1.4', quiet=True) # Ensures lemmatizer stability
+        except Exception as e:
+            print(f"Warning: NLTK download optimization bypassed: {e}")
+            
         # 1. Resolve paths dynamically based on your directory structure
         # __file__ is backend/services/ml_service.py
         # We need to go up two levels to reach the MovieMind-AI root, then into ml/models
