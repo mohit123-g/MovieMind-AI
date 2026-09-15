@@ -77,7 +77,7 @@ def generate_audience_summary(movie_title: str, stats_data: dict) -> str:
         
         # Using Llama 3.3 70B for highly capable, fast text generation
         response = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model="openai/gpt-oss-120b",
             messages=[
                 {
                     "role": "system",
