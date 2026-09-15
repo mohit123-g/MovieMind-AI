@@ -62,7 +62,7 @@
 //   }
 // });
 
-
+importScripts("config.js");
 console.log("[MovieMind] Background Started");
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -92,7 +92,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             // 2. If not, send it to the FastAPI backend
             try {
                 console.log(`[MovieMind] Fetching AI analysis for ${imdbId}...`);
-                const apiRes = await fetch("https://moviemind-ai-server.onrender.com/api/analyze", {
+                const apiRes = await fetch(`${ENV.BACKEND_URL}/api/analyze`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data)
